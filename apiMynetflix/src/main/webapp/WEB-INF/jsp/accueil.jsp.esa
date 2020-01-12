@@ -1,0 +1,21 @@
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link href="./css/styles/accueil.css" type="text/css" rel="stylesheet"> 
+<title>ACCUEIL</title>
+</head>
+<body>
+	<div id=nav>
+		<nav>
+			<a href="<c:url value="/CreerSerie"/>">SERIES</a>
+			<a href="<c:url value="/listeSaison"/>">SAISONS</a>
+			<a href="<c:url value="/listeEpisode"/>">EPISODES</a>
+		</nav>
+	</div>
+	
+</body>
+</html>

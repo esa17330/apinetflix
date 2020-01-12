@@ -1,0 +1,49 @@
+body{
+	font-family:montserrat;
+}
+
+h1{
+	text-align: center;
+    color: red;
+    font-weight: bold;
+    font-size: 57px;
+    margin-top: 5%;
+}
+
+.table{
+	width: 70%;
+	margin-left: 15%;
+	margin-top: 5%;
+}
+
+.navbar-nav{
+	width: 100%;
+	justify-content: space-around;
+}
+
+.navbar-light .navbar-nav .active>.nav-link, .navbar-light .navbar-nav .nav-link.active, .navbar-light .navbar-nav .nav-link.show, .navbar-light .navbar-nav .show>.nav-link {
+    color: red;
+    font-weight: bold;
+}
+
+.img-size{
+	width: 30px;
+	height: 30px;
+}
+
+td, th{
+	text-align: center;
+}
+
+.button-add{
+	position: absolute;
+    right: 250px;
+    top: 130px;
+    display: flex;
+}
+
+#camera{
+	width:60%;
+}
+
+

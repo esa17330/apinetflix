@@ -1,0 +1,42 @@
+#img-wrapper{
+	display: flex;
+    justify-content: center;
+}
+
+#accueil-wrapper{
+	width: 100%;
+}
+
+#photo{
+	height: 90vh;
+    width: 80vw;
+}
+}
+
+body{
+	font-family:montserrat;
+}
+
+
+#title-accueil{
+	color:red;
+	position: absolute;
+	left: 42%;
+	bottom: 10%;
+	font-size: 66px;
+}
+
+.navbar-nav{
+	width: 100%;
+	justify-content: space-around;
+}
+
+.navbar-light .navbar-nav .active>.nav-link, .navbar-light .navbar-nav .nav-link.active, .navbar-light .navbar-nav .nav-link.show, .navbar-light .navbar-nav .show>.nav-link {
+    color: red;
+}
+
+#camera{
+	width:60%;
+}
+
+

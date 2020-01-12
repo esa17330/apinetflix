@@ -1,0 +1,63 @@
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>CREATION SERIE</title>
+		<link href="./css/styles/creer_serie.css" type="text/css" rel="stylesheet"> 
+	</head>
+	<body>
+		<h2>SAISIE D'UNE NOUVELLE SERIE</h2>
+		<form action="" accept-charset="utf-8" method="post">
+			<fieldset>
+				<legend>CREATION SERIE</legend>
+					<p>
+       					<label for="nom_serie">NOM SERIE :</label>
+          				<input type="text" id="nom_serie" name="nom_serie" required > 
+          			</p>
+          			<p>	
+        				<label for="nom_orig">NOM ORIGINAL :</label>
+          				<input type="text" id="nom_orig" name="nom_orig">
+          			</p>
+          			<p>
+          			   <label for="annee_parution">ANNEE DE PARUTION :</label>    
+          				<select id="annee_parution" name ="annee_parution" required >
+                        	<option value="">--</option>
+              				<c:forEach  var="counter" begin="1950" end="2040">
+             					<option value="<c:out value="${counter}"/>">${counter}</option>
+              				</c:forEach>
+          				</select>
+          			</p>
+          			<p>         
+          				<label for="synopsis">SYNOPSIS :</label>
+          				<textarea id="synopsis" name="synopsis" rows="10" cols="80"></textarea>
+          				
+          			</p>
+          			<p>
+          			    <label for="statut">STATUT :</label>
+         				<select id="statut" name="statut">
+							<option value="0">-- Choisissez --</option>
+							<c:forEach var="statut" items="${liste}">
+								<option value="${statut.id}"><c:out value="${statut.libelle}"/></option>
+							</c:forEach>
+						</select> 
+          			</p>
+          			<p>
+           				<label for="pays">PAYS :</label>
+           				<select id="pays" name="pays">
+							<option value="0">-- Choisissez --</option>
+							<c:forEach var="pays" items="${listep}">
+								<option value="${pays.id}"><c:out value="${pays.nom}"/></option>
+							</c:forEach>
+						</select>  
+         
+        		  </p>
+        		  <p>
+          				<input type="submit" name="creer_serie" value="ENREGISTRER">
+          		</p>
+          	</fieldset>
+        </form>
+	</body>
+</html>
