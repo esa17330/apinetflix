@@ -37,21 +37,13 @@ public class AccueilControleurServlet extends HttpServlet {
 		getServletContext().setAttribute("liste_pays", liste_pays);
 		getServletContext().setAttribute("liste_genre", liste_genre);
 
-		// getServletContext().setAttribute("cocktailService", cocktailService);
-		// on place la liste des cocktails en portée "application" pour que les vues
-		// puissent y accéder.
-		// getServletContext().setAttribute("listeCocktails",
-		// cocktailService.getListeCocktails());
-		// ListeCommande listecommande = new ListeCommande();
-		// getServletContext().setAttribute("ListeCommande", listecommande);
-		// getServletContext().setAttribute("listecommande",
-		// listecommande.getListeCommande());
 	}
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+//		
 		getServletContext().getRequestDispatcher(VUE_ACCUEIL).forward(req, resp);
+
 	}
 
 }

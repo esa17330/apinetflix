@@ -33,12 +33,52 @@
 </nav>
 	<h1 id="title-accueil">My Netflix</h1>
 	<div id="img-wrapper">
-	<img src="images/photo.JPG" alt="photo" id="photo">
-</div>
+		<img src="images/photo.JPG" alt="photo" id="photo">
 	</div>
+
 	
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script type="application/javascript">
+
+function getAjaxRequestObject(){
+	var xhr_object = null;
+
+	if(window.XMLHttpRequest) // Firefox
+		xhr_object = new XMLHttpRequest();
+	else if(window.ActiveXObject) // Internet Explorer
+		xhr_object = new ActiveXObject("Microsoft.XMLHTTP");
+	else { // XMLHttpRequest non supporté par le navigateur
+		alert("Votre navigateur ne gère pas les requêtes Javascript");
+		return null;
+	}
+
+	return xhr_object;
+}
+
+
+function test_jk() {
+	var xmlHttpSeries = getAjaxRequestObject();
+	xmlHttpSeries.onreadystatechange = function() {
+		if (this.readyState === 4 && this.status === 200) {
+			//var lesSeries = JSON.parse(this.responseText);
+			//localStorage.setItem("lesSeries",JSON.stringify(lesSeries));
+			
+			
+			
+		}
+	}
+	xmlHttpSeries.open("GET", "accueil?data=series");
+	xmlHttpSeries.send();
+	}
+	
+
+
+		
+test_jk();
+
+	
+</script>
 </body>
 </html>

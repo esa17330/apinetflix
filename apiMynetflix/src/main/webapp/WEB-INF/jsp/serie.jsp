@@ -56,6 +56,7 @@
       <td><select id="serie" name="serie">
 				<option value="0">Choisissez une Série</option>
 				<c:forEach var="serie" items="${serie}">
+				
 					<option value="${serie.id}" ><c:out value="${serie.nom}"/></option>
 				</c:forEach>
 			</select>
@@ -68,35 +69,51 @@
       
       
       
-      <td><a href='<c:url value="/serie"/>'><img src="images/trash.jpg" alt="supprimer" id="supprimer" class="img-size"></a></td>
+      <td><img src="images/trash.jpg" alt="supprimer" id="supprimer" class="img-size"></td>
        <td><a href='<c:url value="/saison"/>'><img src="images/link.jpg" alt="link" id="link1" class="img-size"></a></td>
        <td><a href='<c:url value="/episodes"/>'><img src="images/link.jpg" alt="link" id="link2" class="img-size"></a></td>
     </tr>
   </tbody>
 </table>
+    
       </form>
+      <div>
+      <textarea id="status" name="status" rows="5" cols="50" disabled>
+      <c:forEach var="rows" items="${liste_rows}">
+      <c:out value="${rows }"></c:out></c:forEach></textarea> 
+      </div>
+     
       </div>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 <script type="application/javascript">
 
+
 var liste_serie=document.querySelector("select#serie");
 var url_lire=document.querySelector("img#lire");
+var url_supprimer=document.querySelector("img#supprimer")
 const url=new URL(window.location.href);
+
 
 if (url.searchParams.get("serie") ) {
 	liste_serie.selectedIndex=sessionStorage.getItem('selected');
 }
 
 liste_serie.onchange=function() { 
-	getAnneeParution(liste_serie.value);};
+	getAnneeParution(liste_serie.value);}
+	
 	
 url_lire.onclick=function() {
 	if(liste_serie.selectedIndex!=0) go_liremodifSerie(liste_serie.value);
 	else alert("Veuillez sélectionner une serie dans la liste");
 	};
 		
+url_supprimer.onclick=function() {
+	if(liste_serie.selectedIndex!=0) go_supprimerSerie(liste_serie.value);
+	else alert("Veuillez sélectionner une serie dans la liste");
+	};
+	
 		
 
 

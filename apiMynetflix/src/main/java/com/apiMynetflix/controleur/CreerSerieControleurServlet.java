@@ -1,7 +1,6 @@
 package com.apiMynetflix.controleur;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,18 +26,14 @@ public class CreerSerieControleurServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-		try {
-			List<Statut> listest = new ArrayList<>();
-			listest = seriedao.getListeStatut(3);
-			req.setAttribute("liste", listest);
-			List<Pays> listepays = new ArrayList<>();
-			listepays = seriedao.getListePays();
-			req.setAttribute("listep", listepays);
-			getServletContext().getRequestDispatcher(VUE_FORMULAIRE).forward(req, resp);
+		List<Statut> listest = new ArrayList<>();
+		listest = seriedao.getListeStatut(3);
+		req.setAttribute("liste", listest);
+		List<Pays> listepays = new ArrayList<>();
+		listepays = seriedao.getListePays();
+		req.setAttribute("listep", listepays);
+		getServletContext().getRequestDispatcher(VUE_FORMULAIRE).forward(req, resp);
 
-		} catch (SQLException e) {
-			resp.sendError(500, e.getMessage());
-		}
 	}
 
 	@Override

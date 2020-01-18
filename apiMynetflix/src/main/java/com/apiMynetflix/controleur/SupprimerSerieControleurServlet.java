@@ -15,8 +15,8 @@ import com.apiMynetflix.Dao.SerieDao;
 import com.apiMynetflix.modele.Genre;
 import com.apiMynetflix.modele.Serie;
 
-@WebServlet("/SupprimerSerie")
-public class LireModifSerieControleurServlet extends HttpServlet {
+@WebServlet("/LireModifSerie")
+public class SupprimerSerieControleurServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	SerieDao seriedao;

@@ -1,18 +1,46 @@
-function getAnneeParution(optionvalue) {
-			var liste_serie=document.querySelector("select#serie");
-			sessionStorage.setItem('selected',liste_serie.selectedIndex);
-			location.href="?serie="+optionvalue;
-			
-			
-		}
+
+
+
+function getAnneeParution(id) {
+	
+	//if(annee==0) annee="--";
+	//document.querySelector("td#annee").innerHTML=annee;
+	sessionStorage.setItem('selected',liste_serie.selectedIndex);
+	location.href="?serie="+id;		
+}			
+		
 	
 function go_liremodifSerie(optionvalue) {
 	
 	location.href="/apiMynetflix/LireModifSerie?serie="+optionvalue;
+	//var liste_serie=document.querySelector("select#serie");
+	//sessionStorage.setItem('selected',liste_serie.selectedIndex);
+	//location.href="?serie="+optionvalue;
+	var xmlHttpSeries = getAjaxRequestObject();
+	xmlHttpSeries.onreadystatechange = function() {
+		if (this.readyState === 4 && this.status === 200) {
+			var test = JSON.parse(this.responseText);
+			
+			sessionStorage.setItem("test",JSON.stringify(test));
+			//document.querySelector("td#annee").innerHTML=test;
+			
+		}
+	}
+	xmlHttpSeries.open("GET", "ajax?serie=9999");
+	xmlHttpSeries.send();
+	}
+	
+
+	
+	
+	
+function go_supprimerSerie(optionvalue) {
+	
+	
+	location.href="/apiMynetflix/Serie?supprimer="+optionvalue;
 	
 	
 }	
-	
 
 function getAjaxRequestObject(){
 	var xhr_object = null;
