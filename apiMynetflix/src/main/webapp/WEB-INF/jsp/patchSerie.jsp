@@ -31,7 +31,7 @@
 </nav>
 <div class="">
 <h1 class="title-add">Lire & Modifier Série</h1>
-<form action="LireModifSerie" method="post">
+<form action="LireModifSerie" method="post" id="modif">
   <div class="form-group">
   	
     <input type="text" value="${serie.nom}" class="form-control" name="nom" id="nom" placeholder="Nom">
@@ -45,7 +45,7 @@
   <div class="form-group">
     <select class="form-control" id="statut" name="statut">
 				<option value="0">Choisissez le Statut de la Série</option>
-				<c:forEach var="statut" items="${liste_statut}">
+				<c:forEach var="statut" items="${liste_statut_serie}">
 					<option value="${statut.id}"  ${idstatut == statut.id ? "selected" :""} >
 						<c:out value="${statut.libelle}"/>
 					</option>
@@ -54,7 +54,7 @@
   </div>
   
   <div class="form-group">
-  <select class="form-control" id="genre" name="genre[]" size=5 multiple="multiple">
+  <select class="form-control" id="genre" name="genre" size=5 multiple="multiple">
      
 		<c:forEach var="genre" items="${liste_genre}">
 			<option value="${genre.id}" ${idgenre == genre.id ? "selected" :""} >
@@ -78,6 +78,8 @@
     </select>
   </div>
   <div class="form-group">
+  	
+  	
     <textarea placeholder="Synopsis" name="synopsis" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
   </div>
   <div class="align-button">
@@ -96,21 +98,27 @@
 <script type="application/javascript">
 
 var genre_sel=document.querySelector("select#genre");
+var form=document.querySelector("form#modif")
+
+
 	
+	
+	
+
+
 genre_sel.onchange=function() {
-	
 	document.querySelector("input#genres").value='';
 	var i;   
-    
- 
-for (i=0; i < genre_sel.options.length; i++) 
-{
-	if (genre_sel.options[i].selected) 
+    for (i=0; i < genre_sel.options.length; i++) 
+	{
+		if (genre_sel.options[i].selected) 
 		document.querySelector("input#genres").value+=genre_sel.options[i].label+",";
-		
+	}
 	
-} 
 }	
+
+
+
 </script>
 
 

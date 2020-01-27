@@ -25,15 +25,22 @@ public class AccueilControleurServlet extends HttpServlet {
 
 		SerieDao seriedao = new SerieDao();
 		getServletContext().setAttribute("seriedao", seriedao);
-		List<Statut> liste_statut = new ArrayList<>();
+		List<Statut> liste_statut_serie = new ArrayList<>();
+		List<Statut> liste_statut_saisons = new ArrayList<>();
+		List<Statut> liste_statut_episodes = new ArrayList<>();
 		List<Pays> liste_pays = new ArrayList<>();
 		List<Genre> liste_genre = new ArrayList<>();
 
-		liste_statut = seriedao.getListeStatut(3);
+		liste_statut_saisons = seriedao.getListeStatut(1);
+		liste_statut_episodes = seriedao.getListeStatut(2);
+		liste_statut_serie = seriedao.getListeStatut(3);
+
 		liste_pays = seriedao.getListePays();
 		liste_genre = seriedao.getListeGenre();
 
-		getServletContext().setAttribute("liste_statut", liste_statut);
+		getServletContext().setAttribute("liste_statut_serie", liste_statut_serie);
+		getServletContext().setAttribute("liste_statut_saisons", liste_statut_saisons);
+		getServletContext().setAttribute("liste_statut_episodes", liste_statut_episodes);
 		getServletContext().setAttribute("liste_pays", liste_pays);
 		getServletContext().setAttribute("liste_genre", liste_genre);
 

@@ -15,7 +15,7 @@ import com.apiMynetflix.Dao.SerieDao;
 import com.apiMynetflix.modele.Genre;
 import com.apiMynetflix.modele.Serie;
 
-@WebServlet("/SupprimerSerie")
+@WebServlet("/LireModifSerie")
 public class LireModifSerieControleurServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -65,7 +65,10 @@ public class LireModifSerieControleurServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		int control = 0;
+
 		seriedao = (SerieDao) getServletContext().getAttribute("seriedao");
+		String[] genres = req.getParameterValues("genre");
+		int[] tab_genres = getGenreToInt(genres);
 		String nom = req.getParameter("nom");
 		String nomoriginal = req.getParameter("nomoriginal");
 		String anneedeparution = req.getParameter("anneeparution");
@@ -76,8 +79,9 @@ public class LireModifSerieControleurServlet extends HttpServlet {
 		Serie serie = new Serie(id, nom, nomoriginal, Integer.parseInt(anneedeparution), synopsis,
 				Integer.parseInt(statut), Integer.parseInt(pays));
 		req.setAttribute("serie", serie);
+		req.setAttribute("genres", genres);
 		try {
-			control = seriedao.modifier(serie);
+			control = seriedao.modifier(serie, tab_genres);
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
@@ -87,6 +91,14 @@ public class LireModifSerieControleurServlet extends HttpServlet {
 			req.setAttribute("control", CONTROLE_OK);
 		getServletContext().getRequestDispatcher(VUE_FORMULAIRE).forward(req, resp);
 
+	}
+
+	private int[] getGenreToInt(String[] ts) {
+		int[] ti = new int[ts.length];
+		for (int i = 0; i < ts.length; i++) {
+			ti[i] = Integer.valueOf(ts[i]);
+		}
+		return ti;
 	}
 
 }

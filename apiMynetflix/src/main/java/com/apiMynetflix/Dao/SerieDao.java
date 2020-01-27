@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,14 +20,16 @@ public class SerieDao implements UtilsDao {
 	int control;
 	PreparedStatement pprst = null;
 
-	public int creer(Serie serie) throws SQLException {
+	public int creer(Serie serie, int[] genres) throws SQLException {
 
 		String request = "insert into serie (nom,nomoriginal,anneeparution,synopsys,"
 				+ "idstatut,idpaysorigine) values (?,?,?,?,?,?)";
 		try {
+			int key = 0;
 			cnx = MariaDbConnection.getCnx();
 			cnx.setAutoCommit(false);
-			PreparedStatement pprst = cnx.prepareStatement(request);
+
+			PreparedStatement pprst = cnx.prepareStatement(request, Statement.RETURN_GENERATED_KEYS);
 			pprst.setObject(1, serie.getNom(), Types.VARCHAR);
 			pprst.setObject(2, serie.getNomOriginal(), Types.VARCHAR);
 			pprst.setObject(3, serie.getAnneeParution(), Types.NUMERIC);
@@ -35,6 +38,20 @@ public class SerieDao implements UtilsDao {
 			pprst.setObject(6, serie.getIdPaysOrigine(), Types.NUMERIC);
 			control = pprst.executeUpdate();
 			cnx.commit();
+			java.sql.ResultSet resultSet = pprst.getGeneratedKeys();
+			if (resultSet.next()) {
+				key = resultSet.getInt(1);
+			}
+
+			for (int i = 0; i < genres.length; i++) {
+				String request_app_ins = "insert into appartient (idserie,idgenre) value (?,?)";
+				PreparedStatement pprst3 = cnx.prepareStatement(request_app_ins);
+				pprst3.setObject(1, key, Types.NUMERIC);
+				pprst3.setObject(2, genres[i], Types.NUMERIC);
+				control = pprst3.executeUpdate();
+				cnx.commit();
+			}
+
 		} catch (SQLException e1) {
 			System.out.println(e1.getMessage());
 			if (cnx != null) {
@@ -60,10 +77,13 @@ public class SerieDao implements UtilsDao {
 		return control;
 	}
 
-	public int modifier(Serie serie) throws SQLException {
+	public int modifier(Serie serie, int[] genres) throws SQLException {
 
 		String request = "update serie set nom= ?, nomoriginal = ?,anneeparution = ?,synopsys = ?,"
 				+ "idstatut = ?, idpaysorigine = ? where id = ?";
+
+		String request_app_del = "delete from appartient where idserie = ?";
+
 		try {
 
 			cnx = MariaDbConnection.getCnx();
@@ -78,6 +98,21 @@ public class SerieDao implements UtilsDao {
 			pprst.setObject(7, serie.getId(), Types.NUMERIC);
 			control = pprst.executeUpdate();
 			cnx.commit();
+
+			PreparedStatement pprst2 = cnx.prepareStatement(request_app_del);
+			pprst2.setObject(1, serie.getId(), Types.NUMERIC);
+			control = pprst2.executeUpdate();
+			cnx.commit();
+
+			for (int i = 0; i < genres.length; i++) {
+				String request_app_ins = "insert into appartient (idserie,idgenre) value (?,?)";
+				PreparedStatement pprst3 = cnx.prepareStatement(request_app_ins);
+				pprst3.setObject(1, serie.getId(), Types.NUMERIC);
+				pprst3.setObject(2, genres[i], Types.NUMERIC);
+				control = pprst3.executeUpdate();
+				cnx.commit();
+			}
+
 		} catch (SQLException e1) {
 			System.out.println(e1.getMessage());
 			if (cnx != null) {
@@ -182,6 +217,8 @@ public class SerieDao implements UtilsDao {
 
 		String request_serie = "delete from serie where serie.id= " + id;
 
+		String request_appartient = "delete from appartient where idserie= " + id;
+
 		try {
 			cnx = MariaDbConnection.getCnx();
 			cnx.setAutoCommit(false);
@@ -202,9 +239,15 @@ public class SerieDao implements UtilsDao {
 			control = executeQuery(cnx, request_episode);
 			key = parse_request(request_episode);
 			updated_rows.put(key, control);
+
 			control = executeQuery(cnx, request_saison);
 			key = parse_request(request_saison);
 			updated_rows.put(key, control);
+
+			control = executeQuery(cnx, request_appartient);
+			key = parse_request(request_appartient);
+			updated_rows.put(key, control);
+
 			control = executeQuery(cnx, request_serie);
 			key = parse_request(request_serie);
 			updated_rows.put(key, control);

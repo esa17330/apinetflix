@@ -31,7 +31,7 @@
 </nav>
 <div class="">
 <h1 class="title-add"><img src="images/add.jpg" alt="ajouter" id="ajouter"/>Ajout Série</h1>
-<form>
+<form method="post">
   <div class="form-group">
     <input type="text" class="form-control" name="nom" id="exampleFormControlInput1" placeholder="Nom">
   </div>
@@ -44,7 +44,7 @@
   <div class="form-group">
     <select class="form-control" id="statut" name="statut">
 				<option value="0">Choisissez le Statut de la Série</option>
-				<c:forEach var="statut" items="${liste}">
+				<c:forEach var="statut" items="${liste_statut_serie}">
 					<option value="${statut.id}">
 						<c:out value="${statut.libelle}"/>
 					</option>
@@ -52,12 +52,22 @@
 			</select>
   </div>
   <div class="form-group">
-    <input type="text" class="form-control" name="genre" id="exampleFormControlInput5" placeholder="Genre">
+    <select class="form-control" id="genre" name="genre" size=5 multiple="multiple">
+     
+		<c:forEach var="genre" items="${liste_genre}">
+			<option value="${genre.id}" ${idgenre == genre.id ? "selected" :""} >
+				<c:out value="${genre.libelle}"/>
+			</option>
+		</c:forEach>
+    </select>
+  </div>
+  <div class="form-group">
+    <input type="text" value="${genresTolibelle}" class="form-control" id="genres" name="genres" disabled="disabled"/>
   </div>
   <div class="form-group">
     <select class="form-control" id="exampleFormControlSelect1" name="pays">
       <option value="0">Pays d'Origine</option>
-		<c:forEach var="pays" items="${listep}">
+		<c:forEach var="pays" items="${liste_pays}">
 			<option value="${pays.id}">
 				<c:out value="${pays.nom}"/>
 			</option>
@@ -117,6 +127,27 @@
       <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script type="application/javascript">
+
+var genre_sel=document.querySelector("select#genre");
+	
+genre_sel.onchange=function() {
+	
+	document.querySelector("input#genres").value='';
+	var i;   
+    
+ 
+for (i=0; i < genre_sel.options.length; i++) 
+{
+	if (genre_sel.options[i].selected) 
+		document.querySelector("input#genres").value+=genre_sel.options[i].label+",";
+		
+	
+} 
+}	
+</script>
+
+
 </body>
 </html>
 

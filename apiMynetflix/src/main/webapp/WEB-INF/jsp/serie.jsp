@@ -63,13 +63,12 @@
 			
 	</td>
       <td id="annee"><c:out value="${annee}" default="--"></c:out></td>
+      <td>  	
+      		<img src="images/lire.JPG" alt="lire" id="lire" class="img-size">
+      </td>
       <td>
-      		<img src="images/lire.JPG" alt="lire" id="lire" class="img-size"></td>
-      
-      
-      
-      
-      <td><img src="images/trash.jpg" alt="supprimer" id="supprimer" class="img-size"></td>
+      		<img src="images/trash.jpg" alt="supprimer" id="supprimer" class="img-size">
+      </td>
        <td><a href='<c:url value="/saison"/>'><img src="images/link.jpg" alt="link" id="link1" class="img-size"></a></td>
        <td><a href='<c:url value="/episodes"/>'><img src="images/link.jpg" alt="link" id="link2" class="img-size"></a></td>
     </tr>
@@ -92,6 +91,7 @@
 
 var liste_serie=document.querySelector("select#serie");
 var url_lire=document.querySelector("img#lire");
+var url_ajouter=document.querySelector("img#ajouter");
 var url_supprimer=document.querySelector("img#supprimer")
 const url=new URL(window.location.href);
 
@@ -109,6 +109,9 @@ url_lire.onclick=function() {
 	else alert("Veuillez sélectionner une serie dans la liste");
 	};
 		
+url_ajouter.onclick=function() {
+	location.href="/apiMynetflix/CreerSerie" };	
+	
 url_supprimer.onclick=function() {
 	if(liste_serie.selectedIndex!=0) go_supprimerSerie(liste_serie.value);
 	else alert("Veuillez sélectionner une serie dans la liste");
