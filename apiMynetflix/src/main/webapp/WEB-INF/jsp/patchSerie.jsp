@@ -80,7 +80,8 @@
   <div class="form-group">
   	
   	
-    <textarea placeholder="Synopsis" name="synopsis" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+    <textarea placeholder="Synopsis" name="synopsis" class="form-control" id="exampleFormControlTextarea1" rows="3">
+    <c:out value="${synopsis }"></c:out></textarea>
   </div>
   <div class="align-button">
   <a href="/apiMynetflix/accueil"><button type="button" class="btn btn-primary">Retour accueil</button></a>

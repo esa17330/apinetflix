@@ -75,7 +75,7 @@
     </select>
   </div>
   <div class="form-group">
-    <textarea placeholder="Synopsis" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+    <textarea placeholder="Synopsis" name="synopsis" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
   </div>
   <div class="align-button">
   <button type="submit" class="btn btn-danger">Valider</button>

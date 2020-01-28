@@ -30,7 +30,9 @@ function go_liremodifSerie(optionvalue) {
 	xmlHttpSeries.send();
 	}
 	
-
+function setUrlSaison(id) {
+	location.href="/apiMynetflix/Saison?serie="+id;
+}
 	
 	
 	

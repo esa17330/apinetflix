@@ -99,20 +99,22 @@ public class SerieDao implements UtilsDao {
 			control = pprst.executeUpdate();
 			cnx.commit();
 
-			PreparedStatement pprst2 = cnx.prepareStatement(request_app_del);
-			pprst2.setObject(1, serie.getId(), Types.NUMERIC);
-			control = pprst2.executeUpdate();
-			cnx.commit();
+			if (genres != null) {
 
-			for (int i = 0; i < genres.length; i++) {
-				String request_app_ins = "insert into appartient (idserie,idgenre) value (?,?)";
-				PreparedStatement pprst3 = cnx.prepareStatement(request_app_ins);
-				pprst3.setObject(1, serie.getId(), Types.NUMERIC);
-				pprst3.setObject(2, genres[i], Types.NUMERIC);
-				control = pprst3.executeUpdate();
+				PreparedStatement pprst2 = cnx.prepareStatement(request_app_del);
+				pprst2.setObject(1, serie.getId(), Types.NUMERIC);
+				control = pprst2.executeUpdate();
 				cnx.commit();
-			}
 
+				for (int i = 0; i < genres.length; i++) {
+					String request_app_ins = "insert into appartient (idserie,idgenre) value (?,?)";
+					PreparedStatement pprst3 = cnx.prepareStatement(request_app_ins);
+					pprst3.setObject(1, serie.getId(), Types.NUMERIC);
+					pprst3.setObject(2, genres[i], Types.NUMERIC);
+					control = pprst3.executeUpdate();
+					cnx.commit();
+				}
+			}
 		} catch (SQLException e1) {
 			System.out.println(e1.getMessage());
 			if (cnx != null) {
@@ -173,11 +175,12 @@ public class SerieDao implements UtilsDao {
 
 		ResultSet rs = null;
 		Serie serie = null;
-		String request = "select * from serie where id=" + id;
+		String request = "select * from serie where id= " + id;
 
 		try {
 			cnx = MariaDbConnection.getCnx();
 			PreparedStatement pprst = cnx.prepareStatement(request);
+
 			rs = pprst.executeQuery(request);
 			while (rs.next()) {
 				serie = new Serie(rs.getInt("id"), rs.getString("nom"), rs.getString("nomoriginal"),

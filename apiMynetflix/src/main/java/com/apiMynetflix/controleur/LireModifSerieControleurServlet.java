@@ -21,10 +21,9 @@ public class LireModifSerieControleurServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	SerieDao seriedao;
 	Serie serie;
-	List<Genre> genres;
-	int id = 0;
+	List<Genre> genres = new ArrayList<>();
 	StringBuilder sb = null;
-
+	int id = 0;
 	private static final String VUE_FORMULAIRE = "/WEB-INF/jsp/patchSerie.jsp";
 	private static final String CONTROLE_OK = "1 enregistrement SERIE mis à jour";
 	private static final String CONTROLE_NOK = "Aucune mise à jour de SERIE n'a été effectuée !!!";
@@ -33,7 +32,6 @@ public class LireModifSerieControleurServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
 		seriedao = (SerieDao) getServletContext().getAttribute("seriedao");
-		genres = new ArrayList<>();
 
 		if (req.getParameter("serie") != null)
 			id = Integer.valueOf(req.getParameter("serie"));
@@ -48,6 +46,8 @@ public class LireModifSerieControleurServlet extends HttpServlet {
 			req.setAttribute("serie", serie);
 			req.setAttribute("idstatut", serie.getidStatut());
 			req.setAttribute("idpaysorig", serie.getIdPaysOrigine());
+			req.setAttribute("synopsis", serie.getSynopsis());
+
 			genres = seriedao.getGenreSerie(serie.getId());
 			sb = new StringBuilder();
 			for (Genre g : genres) {
@@ -55,6 +55,7 @@ public class LireModifSerieControleurServlet extends HttpServlet {
 				sb.append(",");
 			}
 			req.setAttribute("genresTolibelle", sb);
+
 		} else {
 			String err = "N° ID incorrect";
 			req.setAttribute("err", err);
@@ -65,10 +66,13 @@ public class LireModifSerieControleurServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		int control = 0;
+		int[] tab_genres = null;
 
 		seriedao = (SerieDao) getServletContext().getAttribute("seriedao");
 		String[] genres = req.getParameterValues("genre");
-		int[] tab_genres = getGenreToInt(genres);
+		if (genres != null) {
+			tab_genres = getGenreToInt(genres);
+		}
 		String nom = req.getParameter("nom");
 		String nomoriginal = req.getParameter("nomoriginal");
 		String anneedeparution = req.getParameter("anneeparution");
@@ -79,9 +83,10 @@ public class LireModifSerieControleurServlet extends HttpServlet {
 		Serie serie = new Serie(id, nom, nomoriginal, Integer.parseInt(anneedeparution), synopsis,
 				Integer.parseInt(statut), Integer.parseInt(pays));
 		req.setAttribute("serie", serie);
-		req.setAttribute("genres", genres);
+
 		try {
 			control = seriedao.modifier(serie, tab_genres);
+
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
