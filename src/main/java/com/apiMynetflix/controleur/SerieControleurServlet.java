@@ -2,7 +2,9 @@ package com.apiMynetflix.controleur;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,60 +12,61 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.apiMynetflix.modele.Pays;
+import com.apiMynetflix.Dao.SerieDao;
 import com.apiMynetflix.modele.Serie;
-import com.apiMynetflix.modele.Statut;
 
-@WebServlet("/ajoutSerie")
+@WebServlet("/Serie")
 public class SerieControleurServlet extends HttpServlet {
-	private static final String VUE_FORMULAIRE = "/WEB-INF/jsp/ajoutSerie.jsp";
-	private static final String VUE_RECAP_SERIE = "WEB-INF/jsp/vueRecapSerie.jsp";
-	SerieDao seriedao = new SerieDao();
+
+	private static final long serialVersionUID = 1L;
+	private static final String VUE_FORMULAIRE1 = "/WEB-INF/jsp/serie.jsp";
+	SerieDao seriedao;
+	List<Serie> liste;
+	Map<String, Integer> rows = new HashMap<>();
+
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
+		int id;
+
+		String annee = null;
+		seriedao = (SerieDao) getServletContext().getAttribute("seriedao");
+		fillSeries();
+		if (req.getParameter("serie") != null) {
+			id = Integer.valueOf(req.getParameter("serie"));
+			for (Serie s : liste) {
+				if (s.getId() == id) {
+					annee = Integer.toString(s.getAnneeParution());
+
+					break;
+				}
+
+			}
+
+		}
+		if (req.getParameter("supprimer") != null) {
+			id = Integer.valueOf(req.getParameter("supprimer"));
+			try {
+				rows = seriedao.supprimerSerie(id);
+				fillSeries();
+				getServletContext().setAttribute("liste_rows", rows);
+
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+			}
+		}
+
+		getServletContext().setAttribute("annee", annee);
+		req.setAttribute("serie", liste);
+		getServletContext().getRequestDispatcher(VUE_FORMULAIRE1).forward(req, resp);
+
+	}
+
+	private void fillSeries() {
 		try {
-
-			List<Statut> listest = seriedao.getListeStatut();
-			req.setAttribute("liste", listest);
-			List<Pays> listepays=seriedao.getListePays();
-			req.setAttribute("listep", listepays);
-			getServletContext().getRequestDispatcher(VUE_FORMULAIRE).forward(req, resp);
-
+			liste = seriedao.listerSerie();
 		} catch (SQLException e) {
-			resp.sendError(500, e.getMessage());
+			System.out.println(e.getMessage());
 		}
 	}
 
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		 try {
-		int idstatut =0;
-		String name=req.getParameter("ajouter");
-		if(name.equals("ajouter")) { 
-		
-		String nom = req.getParameter("nom");
-		String nomoriginal = req.getParameter("nomoriginal");
-		String anneedeparution = req.getParameter("anneedeparution");
-		String synopsis = req.getParameter("synopsis");
-		String statut = req.getParameter("statut");
-		//idstatut=seriedao.getIdStatut(statut);
-		String pays = req.getParameter("pays");
-
-		 Serie serie=new Serie(nom,nomoriginal,Integer.parseInt(anneedeparution),synopsis,Integer.parseInt(statut),Integer.parseInt(pays));
-		 req.setAttribute("serie",serie);
-		 seriedao.InsertSerie(serie);
-		// RequestDispatcher rd =  getServletContext().getRequestDispatcher(VUE_RECAP_SERIE);
-		// rd.forward(req, resp);
-		// } catch (ErreursFormulaireException e) {
-		// req.setAttribute("erreurs", e.getErreurs());
-		// afficherCommande(req, resp);
-		// }
-
-	
-	}
-}catch (SQLException e) {
-	System.out.println(e.getMessage());
-}
-	}
 }

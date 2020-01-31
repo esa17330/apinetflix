@@ -1,22 +1,43 @@
 package com.apiMynetflix.modele;
 
-import java.util.Date;
-
 public class Saison {
 	private int id;
 	private int numero;
 	private String resume;
-	private Date anneeDiffusion;
-	private Statut statut;
-	private Serie serie;
-	
-	public Saison( int numero, String resume, Date anneeDiffusion, Statut statut, Serie serie) {
+	private int anneeDiffusion;
+	private int idstatut;
+	private int idserie;
+
+	public Saison() {
+		super();
+	};
+
+	public Saison(int numero, String resume, int anneeDiffusion, int idstatut) {
 		super();
 		this.numero = numero;
 		this.resume = resume;
 		this.anneeDiffusion = anneeDiffusion;
-		this.statut = statut;
-		this.serie = serie;
+		this.idstatut = idstatut;
+
+	}
+
+	public Saison(int numero, String resume, int anneeDiffusion, int idstatut, int idserie) {
+		super();
+		this.numero = numero;
+		this.resume = resume;
+		this.anneeDiffusion = anneeDiffusion;
+		this.idstatut = idstatut;
+		this.idserie = idserie;
+	}
+
+	public Saison(int id, int numero, String resume, int anneeDiffusion, int idstatut, int idserie) {
+		super();
+		this.id = id;
+		this.numero = numero;
+		this.resume = resume;
+		this.anneeDiffusion = anneeDiffusion;
+		this.idstatut = idstatut;
+		this.idserie = idserie;
 	}
 
 	public int getNumero() {
@@ -35,34 +56,32 @@ public class Saison {
 		this.resume = resume;
 	}
 
-	public Date getAnneeDiffusion() {
+	public int getAnneeDiffusion() {
 		return anneeDiffusion;
 	}
 
-	public void setAnneeDiffusion(Date anneeDiffusion) {
+	public void setAnneeDiffusion(int anneeDiffusion) {
 		this.anneeDiffusion = anneeDiffusion;
 	}
 
-	public Statut getStatut() {
-		return statut;
+	public int getIdStatut() {
+		return idstatut;
 	}
 
-	public void setStatut(Statut statut) {
-		this.statut = statut;
+	public void setIdStatut(int idstatut) {
+		this.idstatut = idstatut;
 	}
 
-	public Serie getSerie() {
-		return serie;
+	public int getIdSerie() {
+		return idserie;
 	}
 
-	public void setSerie(Serie serie) {
-		this.serie = serie;
+	public void setIdSerie(int idserie) {
+		this.idserie = idserie;
 	}
 
 	public int getId() {
 		return id;
 	}
-	
-	
 
 }

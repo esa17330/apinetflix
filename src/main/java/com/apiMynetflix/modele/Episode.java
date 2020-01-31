@@ -3,15 +3,15 @@ package com.apiMynetflix.modele;
 import java.util.Date;
 
 public class Episode {
-	private int id;
-	private int numero;
+	private Integer id;
+	private Integer numero;
 	private String titre;
 	private String titreOriginal;
-	private int duree;
+	private Integer duree;
 	private String resume;
 	private Date dateRealisation;
 	private Date datePremiereDiffusion;
-	private int idpublic;
+	private Integer idpublic;
 	private Statut statut;
 	private Saison saison;
 	

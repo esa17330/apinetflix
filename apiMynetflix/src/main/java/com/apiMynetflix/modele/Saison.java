@@ -8,8 +8,31 @@ public class Saison {
 	private int idstatut;
 	private int idserie;
 
+	public Saison() {
+		super();
+	};
+
+	public Saison(int numero, String resume, int anneeDiffusion, int idstatut) {
+		super();
+		this.numero = numero;
+		this.resume = resume;
+		this.anneeDiffusion = anneeDiffusion;
+		this.idstatut = idstatut;
+
+	}
+
 	public Saison(int numero, String resume, int anneeDiffusion, int idstatut, int idserie) {
 		super();
+		this.numero = numero;
+		this.resume = resume;
+		this.anneeDiffusion = anneeDiffusion;
+		this.idstatut = idstatut;
+		this.idserie = idserie;
+	}
+
+	public Saison(int id, int numero, String resume, int anneeDiffusion, int idstatut, int idserie) {
+		super();
+		this.id = id;
 		this.numero = numero;
 		this.resume = resume;
 		this.anneeDiffusion = anneeDiffusion;

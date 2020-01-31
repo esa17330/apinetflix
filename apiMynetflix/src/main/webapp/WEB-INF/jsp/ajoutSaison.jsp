@@ -33,7 +33,7 @@
 <h1 class="title-add"><img src="images/add.jpg" alt="ajouter" id="ajouter"/>Ajout Saison</h1>
 <form>
   <div class="form-group">
-    <input type="number" min="0" max="200" class="form-control" id="exampleFormControlInput1" name="numero" placeholder="Numéro">
+    <input type="number" class="form-control" id="exampleFormControlInput1" name="numero" placeholder="Numéro" value="${numero }" disabled="disabled">
   </div>
   <div class="form-group">
     <select class="form-control" id="statut" name="statut">

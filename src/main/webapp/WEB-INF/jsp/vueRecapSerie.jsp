@@ -11,21 +11,8 @@
 <title>RECAP SERIE</title>
 </head>
 <body>
-	<h3>
-		RECAPITULATIF DE LA SERIE
-	</h3>
-	<div>
-		<p><fmt:formatDate type = "both" dateStyle = "short" timeStyle = "short" value ='${commande.datecmd}'/></p>
-		<c:set var='id' value='${commande.idcocktail}' />	
-		<p> NOM SERIE : <c:out value='${serie}'/></p>
-				
-		
-		
-		
-		
-	</div>
-	
-	
+
+<p> Les données ont été correctement envoyées à la Base de Données</p>
 
 </body>
 </html>
